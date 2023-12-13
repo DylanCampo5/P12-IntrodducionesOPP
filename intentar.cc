@@ -78,15 +78,15 @@ public:
         std::tm fechaInicio2;
         std::tm fechaFinal2;
     public:
-        Ayudante(const std::tm& fechaInicio, const std::tm& fechaFinal2) {}
+        Ayudante(const std::tm& fechaInicio2, const std::tm& fechaFinal2) {}
 
-        std::string ObtenerFechaInicio () const {
+        std::string ObtenerFechaInicio2 () const {
             char buffer[80];
             std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &fechaInicio2);
             return std::string(buffer);
         }
 
-        std::string ObtenerFechaFinal () const {
+        std::string ObtenerFechaFinal2 () const {
             char buffer[80];
             std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &fechaFinal2);
             return std::string(buffer);
@@ -105,12 +105,6 @@ int main() {
         int edad;
         double altura, peso;
         std::string position;
-
-        std::cout << "Ingrese el nombre del jugador: ";
-        std::cin >> nombreJ;
-
-        std::cout << "Ingrese la edad del jugador: ";
-        std::cin >> edad;
 
         std::cout << "Ingrese la altura del jugador: ";
         std::cin >> altura;
@@ -172,9 +166,7 @@ int main() {
     std::cout << "------------------------" << std::endl;
     std::cout << "JUGADOR/ES: " << std::endl;
     for (const auto& jugador : jugadores) {
-        for (int i = 1; i < jugadores.size(); ++i) {
-            std::cout << "----- Jugador nº" << i << ": " << std::endl;
-        }
+        std::cout << "----- Jugador: " << std::endl;
         std::cout << "Altura: " << jugador.obtenerAltura() << " metros" << std::endl;
         std::cout << "Posición: " << jugador.obtenerPosicion() << std::endl;
         std::cout << "Peso: " << jugador.obtenerPeso() << " kg" << std::endl;
@@ -193,9 +185,9 @@ int main() {
 
     std::cout << "AYUDANTE: " << std::endl;
     std::cout << "Fecha de inicio del ayudante: ";
-    std::cout << ayudante.ObtenerFechaInicio() << std::endl;
+    std::cout << ayudante.ObtenerFechaInicio2() << std::endl;
     std::cout << "Fecha final del ayudante: ";
-    std::cout << ayudante.ObtenerFechaFinal() << std::endl;
+    std::cout << ayudante.ObtenerFechaFinal2() << std::endl;
 //------------------------------------------------------------------------------------------------------------
     return 0;
 }
