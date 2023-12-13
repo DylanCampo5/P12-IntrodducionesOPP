@@ -78,15 +78,16 @@ public:
         std::tm fechaInicio2;
         std::tm fechaFinal2;
     public:
-        Ayudante(const std::tm& fechaInicio2, const std::tm& fechaFinal2) {}
+        Ayudante(const std::tm& fechaInicio2, const std::tm& fechaFinal2) 
+            : fechaInicio2(fechaInicio2), fechaFinal2(fechaFinal2) {}
 
-        std::string ObtenerFechaInicio2 () const {
+        std::string ObtenerFechaInicio () const {
             char buffer[80];
             std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &fechaInicio2);
             return std::string(buffer);
         }
 
-        std::string ObtenerFechaFinal2 () const {
+        std::string ObtenerFechaFinal () const {
             char buffer[80];
             std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &fechaFinal2);
             return std::string(buffer);
@@ -105,6 +106,12 @@ int main() {
         int edad;
         double altura, peso;
         std::string position;
+
+        std::cout << "Ingrese el nombre del jugador: ";
+        std::cin >> nombreJ;
+
+        std::cout << "Ingrese la edad del jugador: ";
+        std::cin >> edad;
 
         std::cout << "Ingrese la altura del jugador: ";
         std::cin >> altura;
@@ -185,9 +192,9 @@ int main() {
 
     std::cout << "AYUDANTE: " << std::endl;
     std::cout << "Fecha de inicio del ayudante: ";
-    std::cout << ayudante.ObtenerFechaInicio2() << std::endl;
+    std::cout << ayudante.ObtenerFechaInicio() << std::endl;
     std::cout << "Fecha final del ayudante: ";
-    std::cout << ayudante.ObtenerFechaFinal2() << std::endl;
+    std::cout << ayudante.ObtenerFechaFinal() << std::endl;
 //------------------------------------------------------------------------------------------------------------
     return 0;
 }
