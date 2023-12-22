@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <ctime>
 #include <vector>
 #include <iomanip>
 
@@ -19,17 +18,18 @@ class Persona {
   int obtenerEdad() const {
     return edad;
   }
+};
 
   // Clase interna Jugador
-  class Jugador {
+  class Jugador : public Persona{
    private:
     double altura;
     std::string posicion;
     double peso;
 
    public:
-    Jugador(double altura, const std::string& posicion, double peso)
-        : altura(altura), posicion(posicion), peso(peso) {}
+    Jugador(std::string nombre, int edad, double altura, const std::string& posicion, double peso)
+        : Persona(nombre, edad), altura(altura), posicion(posicion), peso(peso) {}
 
     double obtenerAltura() const {
       return altura;
@@ -45,61 +45,51 @@ class Persona {
   };
 
   // Clase interna Entrenador
-  class Entrenador {
+  class Entrenador : public Persona{
    private:
     std::string licencia;
-    std::tm fechaInicio;
-    std::tm fechaFinal;
+    std::string fechaInicio;
+    std::string fechaFinal;
 
    public:
-    Entrenador(std::string licencia, const std::tm& fechaInicio,
-               const std::tm& fechaFinal)
-        : licencia(licencia), fechaInicio(fechaInicio), fechaFinal(fechaFinal) {}
+    Entrenador(std::string nombre, int edad, std::string licencia, const std::string& fechaInicio, const std::string& fechaFinal)
+        : Persona(nombre, edad), licencia(licencia), fechaInicio(fechaInicio), fechaFinal(fechaFinal) {}
 
     std::string ObtenerLicencia() const {
       return licencia;
     }
 
     std::string ObtenerFechaInicio() const {
-      char buffer[80];
-      std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &fechaInicio);
-      return std::string(buffer);
+      return fechaInicio;
     }
 
     std::string ObtenerFechaFinal() const {
-      char buffer[80];
-      std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &fechaFinal);
-      return std::string(buffer);
+      return fechaFinal;
     }
   };
 
   // Clase interna Ayudante
-  class Ayudante {
+  class Ayudante : public Persona{
    private:
-    std::tm fechaInicio2;
-    std::tm fechaFinal2;
+    std::string fechaInicio2;
+    std::string fechaFinal2;
 
    public:
-    Ayudante(const std::tm& fechaInicio2, const std::tm& fechaFinal2)
-        : fechaInicio2(fechaInicio2), fechaFinal2(fechaFinal2) {}
+    Ayudante(std::string nombre, int edad, const std::string& fechaInicio2, const std::string& fechaFinal2)
+        : Persona(nombre, edad), fechaInicio2(fechaInicio2), fechaFinal2(fechaFinal2) {}
 
     std::string ObtenerFechaInicio() const {
-      char buffer[80];
-      std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &fechaInicio2);
-      return std::string(buffer);
+      return fechaInicio2;
     }
 
     std::string ObtenerFechaFinal() const {
-      char buffer[80];
-      std::strftime(buffer, sizeof(buffer), "%Y-%m-%d", &fechaFinal2);
-      return std::string(buffer);
+      return fechaFinal2;
     }
   };
-};
 
 int main() {
   // Crear una persona con jugador
-  std::vector<Persona::Jugador> jugadores;
+  std::vector<Jugador> jugadores;
   char continuar;
   do {
     std::string nombreJ;
@@ -122,8 +112,8 @@ int main() {
     std::cout << "Ingrese la posición del jugador: ";
     std::cin >> position;
 
-    Persona::Jugador jugador(altura, position, peso);
-    jugadores.push_back(jugador);
+    Jugador jugador1(nombreJ, edad, altura, position, peso);
+    jugadores.push_back(jugador1);
 
     std::cout << "Deseas ingresar otro jugador? (Y/N)" << std::endl;
     std::cin >> continuar;
@@ -140,14 +130,14 @@ int main() {
   std::string licenciaE;
   std::cin >> licenciaE;
 
-  std::tm fechaInicio;
-  std::tm fechaFinal;
+  std::string fechaInicio;
+  std::string fechaFinal;
   std::cout << "Ingrese la fecha de ingreso (YYYY MM DD): " << std::endl;
-  std::cin >> std::get_time(&fechaInicio, "%Y %m %d");
+  std::cin >> fechaInicio;
   std::cout << "Ingrese la fecha de salida (YYYY MM DD): " << std::endl;
-  std::cin >> std::get_time(&fechaFinal, "%Y %m %d");
+  std::cin >> fechaFinal;
 
-  Persona::Entrenador entrenador(licenciaE, fechaInicio, fechaFinal);
+  Entrenador entrenador(nombreE, edadE, licenciaE, fechaInicio, fechaFinal);
 
   // Crear una persona con ayudante
   std::cout << "Dime el nombre y la edad del ayudante" << std::endl;
@@ -156,13 +146,13 @@ int main() {
   std::cin >> nombreA >> edadA;
   Persona personal(nombreA, edadA);
 
-  std::tm fechaInicio2;
-  std::tm fechaFinal2;
-  std::cout << "Ingrese la fecha de ingreso (YYYY MM DD): " << std::endl;
-  std::cin >> std::get_time(&fechaInicio2, "%Y %m %d");
-  std::cout << "Ingrese la fecha de salida (YYYY MM DD): " << std::endl;
-  std::cin >> std::get_time(&fechaFinal2, "%Y %m %d");
-  Persona::Ayudante ayudante(fechaInicio2, fechaFinal2);
+  std::string fechaInicio2;
+  std::string fechaFinal2;
+  std::cout << "Ingrese la fecha de ingreso (YYYY-MM-DD): " << std::endl;
+  std::cin >> fechaInicio2;
+  std::cout << "Ingrese la fecha de salida (YYYY-MM-DD): " << std::endl;
+  std::cin >> fechaFinal2;
+  Ayudante ayudante(nombreA, edadA, fechaInicio2, fechaFinal2);
 
   // Impresión de datos
   std::cout << "------------------------" << std::endl;
